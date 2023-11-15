@@ -12,8 +12,24 @@ function [ Sigma ] = compute_covariance( X, X_bar, type )
 %                          Gaussian function
 %%
 
+M = size(X,2);
+N = size(X,1);
+XX = X-X_bar;
 
+switch type
+    case 'full'
+        Sigma = XX*XX' / (M-1);
+    case 'diag'
+        Sigma = XX*XX' / (M-1);
 
+        Sigma = diag(Sigma(sub2ind(size(Sigma), 1:length(Sigma), 1:length(Sigma))));
+    case 'iso'
+        sum = 0;
+        for i = 1:M
+            sum = sum + norm(X(:,i) - X_bar)^2;
+        end
+        sum = sum / (N*M);
+        Sigma = diag(ones(1,N)*sum);
 
 end
 

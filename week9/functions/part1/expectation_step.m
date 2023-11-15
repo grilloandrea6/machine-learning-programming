@@ -14,6 +14,21 @@ function [Pk_x] = expectation_step(X, Priors, Mu, Sigma, params)
 %                     for generating a point m in the dataset 
 %%
 
+K = length(Priors);
+M = size(X,2);
+
+Pk_x = zeros(K,M);
+
+for i=1:M
+    sum = 0;
+    for k = 1:K
+        sum = sum + Priors(k) * gaussPDF(X(:,i),Mu(:,k),Sigma(:,:,k));
+    end
+
+    for k = 1:K
+        Pk_x(k,i) = Priors(k) * gaussPDF(X(:,i),Mu(:,k),Sigma(:,:,k)) / sum;
+    end
+end
 
 
 

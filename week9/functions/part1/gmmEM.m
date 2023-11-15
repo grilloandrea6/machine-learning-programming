@@ -20,8 +20,18 @@ function [  Priors, Mu, Sigma, iter ] = gmmEM(X, params)
 %       o iter      : (1 x 1) number of iterations it took to converge
 %%
 
+iter = 0;
+[ Priors, Mu, Sigma, ~] = gmmInit(X, params);
 
 
+for i= 1:params.max_iter
+    iter = iter+1;
+
+    [Pk_x] = expectation_step(X, Priors, Mu, Sigma, params);
+    [Priors,Mu,Sigma] = maximization_step(X, Pk_x, params);
+
+    % if it is stable stop
+end
 
 
 end

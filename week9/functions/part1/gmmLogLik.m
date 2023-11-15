@@ -17,7 +17,18 @@ function [ logl ] = gmmLogLik(X, Priors, Mu, Sigma)
 %      o logl       : (1 x 1) , loglikelihood
 %%
 
+M = size(X,2);
+K = length(Priors);
 
+logl = 0;
+
+for i=1:M
+    ins = 0;
+    for k=1:K
+        ins = ins + Priors(k) * gaussPDF(X(:,i),Mu(:,k),Sigma(:,:,k));
+    end
+    logl = logl + log(ins);
+end
 
 
 

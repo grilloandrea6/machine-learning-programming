@@ -13,8 +13,12 @@ function prob = gaussPDF(X, Mu, Sigma)
 %       o prob  : (1 x M),  a 1xM vector representing the probabilities for each 
 %                           M datapoints given Mu and Sigma    
 %%
+M = size(X,2);
+N = size(X,1);
+prob = zeros(1,M);
+for i=1:M
+    testVar = ((X(:,i) - Mu)' * inv(Sigma) * (X(:,i) - Mu));
 
-
-
-
+    prob(i) = exp(-.5 * testVar) / ((2*pi)^(N/2) * sqrt(det(Sigma)));
 end
+

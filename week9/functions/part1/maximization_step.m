@@ -16,6 +16,45 @@ function [Priors,Mu,Sigma] = maximization_step(X, Pk_x, params)
 %                   updated Covariance matrices  Sigma = {Sigma^1,...,Sigma^K}
 %%
 
+[K, M] = size(Pk_x);
+N = size(X,1);
+
+Priors = zeros(1,K);
+Mu = zeros(N,K);
+
+for k = 1:K
+    sum = 0;
+    sumXi = 0;
+    sumCov = 0;
+    sumIso = 0;
+    for i = 1:M
+        gauss= Pk_x(k,i);
+        sum = sum + gauss;
+        sumXi = sumXi + gauss * X(:,i);
+    end
+
+    Priors(k) = sum/M;
+    Mu(:,k) = sumXi/sum;
+
+    for i = 1:M
+        gauss= Pk_x(k,i);
+        sumCov = sumCov + gauss * (X(:,i)-Mu(:,k))*(X(:,i)-Mu(:,k))';
+        sumIso = sumIso + gauss * norm(X(:,i) - Mu(:,k))^2;
+    end
+
+    fullCov = sumCov / sum;
+    switch params.cov_type
+        case "full"
+            Sigma(:,:,k) = fullCov;
+        case "diag"
+            Sigma(:,:,k) = diag(diag(fullCov));
+        case "iso"
+            Sigma(:,:,k) = sumIso / (N * sum);
+    end
+    
+
+end
+
 
 
 
