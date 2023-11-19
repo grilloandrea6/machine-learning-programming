@@ -19,9 +19,22 @@ function [AIC_curve, BIC_curve] =  gmm_eval(X, K_range, repeats, params)
 %       o BIC_curve  : (1 X K), vector of min BIC values for K-range
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+K = length(K_range);
+AIC_curve = zeros(1,K);
+BIC_curve = zeros(1,K);
+AICtmp = zeros(1,repeats);
+BICtmp = zeros(1,repeats);
 
-
-
-
-
+for k = 1:K
+    params.k = K_range(k);
+    for i = 1:repeats
+        [Priors, Mu, Sigma, ~] = gmmEM(X, params);
+        [AICtmp(i), BICtmp(i)] = gmm_metrics(X, Priors, Mu, Sigma, params.cov_type);
+    end
+    
+    AIC_curve(k) = min(AICtmp);
+    BIC_curve(k) = min(BICtmp);
+    disp(AICtmp)
+    disp(BICtmp)
+end
 end

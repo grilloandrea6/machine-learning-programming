@@ -18,9 +18,20 @@ function [AIC, BIC] =  gmm_metrics(X, Priors, Mu, Sigma, cov_type)
 %       o AIC      : (1 x 1), Akaike Information Criterion
 %       o BIC      : (1 x 1), Bayesian Information Criteria
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[N, K] = size(Mu);
+M = size(X,2);
+switch cov_type
+    case 'full'
+        B = K * (1 + 2*N + N * (N-1) / 2) - 1;
+    case 'diag'
+        B = K * (1 + 2 * N) - 1;
+    case 'iso'
+        B = K * (2 + N) - 1;
+end
+logl = gmmLogLik(X, Priors, Mu, Sigma);
 
-
-
+AIC = -2*logl + 2 * B;
+BIC = -2 * logl + log(M) * B;
 
 
 end

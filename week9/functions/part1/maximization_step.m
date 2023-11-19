@@ -21,6 +21,7 @@ N = size(X,1);
 
 Priors = zeros(1,K);
 Mu = zeros(N,K);
+Sigma = zeros(N,N,K);
 
 for k = 1:K
     sum = 0;
@@ -49,9 +50,10 @@ for k = 1:K
         case "diag"
             Sigma(:,:,k) = diag(diag(fullCov));
         case "iso"
-            Sigma(:,:,k) = sumIso / (N * sum);
+            Sigma(:,:,k) = eye(N) * sumIso / (N * sum);
     end
     
+   Sigma(:,:,k) = Sigma(:,:,k) + 1e-5*eye(N);
 
 end
 

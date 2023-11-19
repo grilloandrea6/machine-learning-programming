@@ -18,7 +18,7 @@ seed = rng(42);
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % choose a dataset
 dataset_list = {'1a', '1b', '1c'};
-dataset = dataset_list{1};
+dataset = dataset_list{3};
 
 switch dataset
     %% 1a) Load 2d GMM Dataset

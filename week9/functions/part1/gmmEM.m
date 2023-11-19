@@ -22,15 +22,19 @@ function [  Priors, Mu, Sigma, iter ] = gmmEM(X, params)
 
 iter = 0;
 [ Priors, Mu, Sigma, ~] = gmmInit(X, params);
-
-
+oldlogl = gmmLogLik(X, Priors, Mu, Sigma);
 for i= 1:params.max_iter
     iter = iter+1;
 
     [Pk_x] = expectation_step(X, Priors, Mu, Sigma, params);
-    [Priors,Mu,Sigma] = maximization_step(X, Pk_x, params);
+    [Priors,Mu,Sigma] = maximization_step(X, Pk_x, params); 
 
-    % if it is stable stop
+    logl = gmmLogLik(X, Priors, Mu, Sigma);
+
+    if abs(logl - oldlogl) <3e-5
+        break
+    end
+    oldlogl = logl;
 end
 
 
