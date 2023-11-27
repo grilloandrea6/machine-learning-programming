@@ -56,10 +56,5 @@ for k = 1:K
    Sigma(:,:,k) = Sigma(:,:,k) + 1e-5*eye(N);
 
 end
-
-
-
-
-
 end
 

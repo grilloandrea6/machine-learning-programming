@@ -34,7 +34,5 @@ for k = 1:K
     
     AIC_curve(k) = min(AICtmp);
     BIC_curve(k) = min(BICtmp);
-    disp(AICtmp)
-    disp(BICtmp)
 end
 end
