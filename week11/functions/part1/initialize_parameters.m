@@ -27,9 +27,29 @@ params.max_iter = 500;
 params.d_type = 'L2';
 params.init = 'plus';
 
+switch dataset_type
+    case 'twospirals'
+        data = twospirals()';
+        params.k = 10;
+        params.cov_type = 'full';
+        params.valid_ratio = 0.25;
 
+    case 'halfkernel'
+        data = halfkernel()';
+        params.k = 4;
+        params.cov_type = 'full';
+        params.valid_ratio = 0.8;
 
-
+    case 'corners'
+        data = corners()';
+        params.k = 2;
+        params.cov_type = 'diag';
+        params.valid_ratio = 0.25;
+end
+valid_trasf = 1/(1 + params.valid_ratio);
+N = size(data,1);
+[Xtrain, Ytrain, Xtest, Ytest] = split_data(data(1:N-1,:), data(N,:), valid_trasf);
+data = data';
 
 
 

@@ -1,6 +1,6 @@
 addpath(genpath("./utils"))
 addpath(genpath("./plot_functions"))
-addpath(genpath("../solution/functions/part1"))
+addpath(genpath("./functions/part1"))
 
 clear; 
 close all; 

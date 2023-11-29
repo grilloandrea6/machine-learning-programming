@@ -19,7 +19,14 @@ function [models] = gmm_models(Xtrain, Ytrain, params)
 %                   |            Covariance matrices  Sigma = {Sigma^1,...,Sigma^K}
 %%
 
+i = 1;
+for y = unique(Ytrain)
+    
+    [  model.Priors, model.Mu, model.Sigma, ~ ] = gmmEM(Xtrain(:,Ytrain == y), params);
 
+    models(i) = model;
+    i = i + 1;
+end
 
 
 

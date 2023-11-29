@@ -1,7 +1,7 @@
 addpath(genpath("./utils"))
 addpath(genpath("./plot_functions"))
-addpath(genpath("../solution/functions/part1"))
-addpath(genpath("../solution/functions/part2"))
+addpath(genpath("./functions/part1"))
+addpath(genpath("./functions/part2"))
 
 clear; 
 close all; 
@@ -16,7 +16,7 @@ dataset_path = './data/';
 dataset_type = "halfkernel";
 [data, Xtrain, ~, ~, ~, params] = initialize_parameters(dataset_type);
 
-params.k = 25; % try to change here
+params.k = 45; % try to change here
 
 [Priors, Mu, Sigma] = gmmEM(Xtrain, params);
 
