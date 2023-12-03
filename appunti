@@ -1,0 +1,82 @@
+ - - - PCA - - -
+ - compute
+demean data
+ X = X - mean(X)
+cov matrix
+ C = X*X' / (M - 1)
+eig decomposition
+ [vect, val] = eig(C)
+ [eigenvalues,idx] = sort(diag(val),'descend')
+ [eigenvectors] = vect(:,idx)
+ - project
+Ap = eigenvectors(:,1:p)' 
+Y = Ap ( X - Mu)
+
+ - reconstruct
+Xhat = pinv(Ap) * Y + Mu
+
+ - reconstruction_error
+norm(X-Xhat, 2)
+
+ - compress image
+for i=1:3
+   compute
+   project
+
+ - reconstruct image
+for i =1:3
+    reconstructpca
+
+ - normalize
+  minmax
+    x = (data - min) / (max - min)
+      //data==min -> X = 0
+      //data==max -> X = 1
+
+  zscore
+    x = (data - mean) / stddev
+
+ 
+ - - - KMEANS - - - 
+ - init
+  datasample from centroids
+        Mu = X(:,randsample(M,k));
+  range
+    rand in minmax
+
+ - compute_distance
+  norm
+
+ - distance_to_centroids
+  distance of each point to each centroid
+
+
+ - check_convergenze
+   return true if compute_distance(Mu,Mu_previous) < tolerance for more than maxTolIter iterations
+
+
+TODO kmeans function
+
+
+ - - - KNN - - - 
+
+KNN
+
+ K pari per classi dispari / viceversa / This avoids ties during the majority voting step
+
+  foreach test point
+    compute distance to each point in dataset
+    sort distances and take first Ks
+    mode of the first Ks
+
+accuracy
+    accuracy = sum(y_test==y_est) / M
+
+knn_eval
+  for each k in k_range
+    y_est = knn
+    acc_curve(i) = accuracy()
+
+
+
+
