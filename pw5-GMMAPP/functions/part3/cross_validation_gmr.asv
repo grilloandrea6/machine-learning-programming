@@ -49,6 +49,19 @@ metrics.std_R2 = zeros(1, K);
 metrics.std_AIC = zeros(1, K);
 metrics.std_BIC = zeros(1, K);
 
+
+for k = 1:K
+    params.k = K_range(k);
+    for i = 1:F_fold
+        [Priors, Mu, Sigma, ~] = gmmEM(X, params);
+        [AICtmp(i), BICtmp(i)] = gmm_metrics(X, Priors, Mu, Sigma, params.cov_type);
+    end
+    
+    AIC_curve(k) = mean(AICtmp);
+    BIC_curve(k) = min(BICtmp);
+end
+
+
 for k = 1:K
     params.k = k_range(k);
 
@@ -59,17 +72,22 @@ for k = 1:K
         [AIC(i), BIC(i)] =  gmm_metrics([X_train;y_train],Priors,Mu,Sigma,params.cov_type);
         [MSE(i), NMSE(i), R2(i)] = regression_metrics(y_est,y_test);
     end
-    metrics.mean_MSE(k) = mean(MSE);
-    metrics.mean_NMSE(k) = mean(NMSE);
-    metrics.mean_R2(k) = mean(R2);
-    metrics.mean_AIC(k) = mean(AIC);
-    metrics.mean_BIC(k) = mean(BIC);
+    mean_MSE(k) = mean(MSE);
+    mean_NMSE(a) = mean(NMSE);
+    mean_R2(a) = mean(R2);
+    mean_AIC(a) = mean(AIC);
+    mean_BIC(a) = mean(BIC);
     
-    metrics.std_MSE(k) = std(MSE);
-    metrics.std_NMSE(k) = std(NMSE);
-    metrics.std_R2(k) = std(R2);
-    metrics.std_AIC(k) = std(AIC);
-    metrics.std_BIC(k) = std(BIC);
+    std_MSE(k) = std(MSE);
+    std_NMSE(a) = std(NMSE);
+    std_R2(a) = std(R2);
+    std_AIC(a) = std(AIC);
+    std_BIC(a) = std(BIC);
 end
+
+
+
+
+
 end
 

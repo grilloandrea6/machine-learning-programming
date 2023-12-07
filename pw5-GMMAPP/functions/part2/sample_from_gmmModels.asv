@@ -20,18 +20,12 @@ nClasses = length(models);
 XNew = [];
 
 if exist('desiredClass','var')
-    % I sum 1 because numbers start from 0 and in the solution image there
-    % was the 4th one
-    XNew = sample_from_gmm(models(desiredClass+1), nbSamplesPerClass);
+    XNew = sample_from_gmm(models(desiredClass), nbSamplesPerClass);
 else
     for i = 1:nClasses
         X_ = sample_from_gmm(models(i), nbSamplesPerClass);
         XNew = [XNew X_];
     end
-    % permutate the data
-    index = randperm(nClasses*nbSamplesPerClass);
-    XNew = XNew(:,index);
-
 end
 % disp(XNew)
 % size(XNew)

@@ -1,6 +1,6 @@
 addpath(genpath("./utils"))
 addpath(genpath("./plot_functions"))
-addpath(genpath("../solution/functions/part3"))
+addpath(genpath("./functions/part3"))
 
 clear; 
 close all; 
@@ -12,7 +12,7 @@ dataset_path = './data/';
 %%               Task 6: Regression 1D dataset
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%  (1a) Generate Data from a noisy line %%%%%%
-dataset_type = '1d-sinc';
+dataset_type = '1d-sine';
 [ X, y_true, y ] = load_regression_datasets( dataset_type, dataset_path );
 Xi = [X  y]';
 
@@ -46,7 +46,7 @@ Xi = [X  y]';
 
 % Fit GMM with Chosen parameters
 params.cov_type = 'full';
-params.k = 4;
+params.k = 50;
 params.max_iter_init = 100;
 params.max_iter = 500;
 params.d_type = 'L2';
@@ -69,7 +69,7 @@ plot_2Dregression(X, y, ftruth, f)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      Task 7 & 8: Cross validation
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-dataset_type = '1d-sine';
+dataset_type = '1d-sinc';
 [ X, y_true, y, ftruth ] = load_regression_datasets( dataset_type, dataset_path );
 Xi = [X  y]';
 
@@ -82,7 +82,7 @@ params.init = 'plus';
 
 % Cross-validation parameters
 valid_ratio  = 0.2;    % train/test ratio
-k_range   = 1:2:10;   % range of K to evaluate
+k_range   = 1:1:10;   % range of K to evaluate
 F_fold    = 10;     % # of Folds for cv
 
 % Compute F-fold cross-validation

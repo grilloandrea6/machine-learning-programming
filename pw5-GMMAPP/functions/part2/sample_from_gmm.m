@@ -16,11 +16,11 @@ function [XNew] = sample_from_gmm(gmm, nbSamples)
 
 K = size(gmm.Priors,2);
 N = size(gmm.Mu,1);
-randGmm = randsrc(1,nbSamples,[1:K;gmm.Priors]);
+randGmm = randsrc(nbSamples,1,[1:K;gmm.Priors]);
 XNew = zeros(N,nbSamples);
 
 for i = 1:nbSamples
-    XNew(:,i) = mvnrnd(gmm.Mu(:,randGmm(i)), gmm.Sigma(:,:,randGmm(i)))';
+    XNew(:,i) = mvnrnd(gmm.Mu(:,randGmm(i)), gmm.Sigma(:,:,randGmm(i)));
 end
 
 end

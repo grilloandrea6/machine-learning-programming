@@ -18,28 +18,35 @@ function [MSE, NMSE, Rsquared] = regression_metrics( yest, y )
 
 M = size(y,2);
 
-MSE = 0;
 sumy = 0;
 sumyest = 0;
 sumcov = 0;
-var = 0;
 
-mu_y = mean(y,2);
-mu_yest = mean(yest,2);
+
+y_sum = sum(y,2)/M;
+yest_sum = sum(yest,2)/M;
+mu = mean(y,2);
 
 for i = 1:M
     MSE = MSE + (yest(:,i) - y(:,i))^2;
-    var = var + (y(:,i) - mu_y)^2;
+    var = var + (y(:,i) - mu)^2;
 
-    sumy = sumy + (y(:,i) - mu_y)^2;
-    sumyest = sumyest + (yest(:,i) - mu_yest)^2;
-    sumcov = sumcov + (y(:,i) - mu_y) * (yest(:,i) - mu_yest);
+    sumy = sumy + (y(:,i) - y_sum)^2;
+    sumyest = sumyest + (yest(:,i)-yest_sum)^2;
+    sumcov = sumcov + (y(:,i) - y_sum) * (yest(:,i) - yest_m);
 end
 
 MSE = MSE / M;
 var = var / (M - 1);
 NMSE = MSE / var;
+
+
+
 Rsquared = sumcov^2 / (sumy * sumyest);
+
+
+
+
 
 end
 
