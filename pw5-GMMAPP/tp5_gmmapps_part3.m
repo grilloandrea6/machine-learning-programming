@@ -40,13 +40,13 @@ plot_regression(X, y, y_true, y_est, var_est, '1D Linear Dataset');
 %%             2)  Regression 2D dataset
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% %%%% (2a) Sin/Cos Dataset %%%%%%
-dataset_type = '2d-gmm';
+dataset_type = '2d-cossine';
 [ X, y_true, y, ftruth ] = load_regression_datasets( dataset_type, dataset_path );
 Xi = [X  y]';
 
 % Fit GMM with Chosen parameters
 params.cov_type = 'full';
-params.k = 50;
+params.k = 4;
 params.max_iter_init = 100;
 params.max_iter = 500;
 params.d_type = 'L2';
