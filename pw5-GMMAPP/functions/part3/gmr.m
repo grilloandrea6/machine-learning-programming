@@ -22,32 +22,34 @@ function [y_est, var_est] = gmr(Priors, Mu, Sigma, X, in, out)
 %                matrices retrieved. 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % % 
-[N, M] = size(X);
+M = size(X,2);
 P = length(out);
-[D, K] = size(Mu);
+K = length(Priors);
 
 y_est = zeros(P,M);
 var_est = zeros(P,P,M);
 
-MuX = Mu(1:N,:);
-MuY = Mu(N+1:D,:);
-SXX = Sigma(1:N,1:N,:);
-SYY = Sigma(N+1:D,N+1:D,:);
-SXY = Sigma(1:N,N+1:D,:);
-SYX = Sigma(N+1:D,1:N,:);
+Mu_in = Mu(in,:);
+Mu_out = Mu(out,:);
+
+Sigma_in = Sigma(in,in,:);
+Sigma_out = Sigma(out,out,:);
+
+Sigma_inout = Sigma(in,out,:);
+Sigma_outin = Sigma(out,in,:);
 
 for m = 1:M
     denSum = 0;
     for k = 1:K
-        denSum = denSum + Priors(k) * gaussPDF(X(:, m), MuX(:, k), SXX(:, :, k));
+        denSum = denSum + Priors(k) * gaussPDF(X(:, m), Mu_in(:, k), Sigma_in(:, :, k));
     end
     for k = 1:K
-        beta = Priors(k) * gaussPDF(X(:, m), MuX(:, k), SXX(:, :, k)) / denSum;
+        beta = Priors(k) * gaussPDF(X(:, m), Mu_in(:, k), Sigma_in(:, :, k)) / denSum;
 
-        mutilde = MuY(:, k) + SYX(:, :, k) / (SXX(:, :, k)) * (X(:, m) - MuX(:, k));
+        mutilde = Mu_out(:, k) + Sigma_outin(:, :, k) * inv(Sigma_in(:, :, k)) * (X(:, m) - Mu_in(:, k));
         y_est(:, m) = y_est(:, m) + beta * mutilde;
 
-        sigmatilde = SYY(:, :, k) - (SYX(:, :, k) / (SXX(:, :, k)) * SXY(:, :, k));
+        sigmatilde = Sigma_out(:, :, k) - (Sigma_outin(:, :, k) * inv(Sigma_in(:, :, k)) * Sigma_inout(:, :, k));
         var_est(:, :, m) = var_est(:, :, m) + beta * (mutilde.^2 + sigmatilde);
     end
 
