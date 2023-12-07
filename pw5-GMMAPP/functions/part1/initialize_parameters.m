@@ -30,7 +30,7 @@ params.init = 'plus';
 switch dataset_type
     case 'twospirals'
         data = twospirals()';
-        params.k = 10;
+        params.k = 13;
         params.cov_type = 'full';
         params.valid_ratio = 0.25;
 
@@ -38,7 +38,7 @@ switch dataset_type
         data = halfkernel()';
         params.k = 4;
         params.cov_type = 'full';
-        params.valid_ratio = 0.8;
+        params.valid_ratio = 0.25;
 
     case 'corners'
         data = corners()';
@@ -46,12 +46,10 @@ switch dataset_type
         params.cov_type = 'diag';
         params.valid_ratio = 0.25;
 end
-valid_trasf = 1/(1 + params.valid_ratio);
+valid_trasf = params.valid_ratio; %1/(1 + params.valid_ratio);
 N = size(data,1);
 [Xtrain, Ytrain, Xtest, Ytest] = split_data(data(1:N-1,:), data(N,:), valid_trasf);
 data = data';
-
-
 
 end
 
