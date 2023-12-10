@@ -46,9 +46,20 @@ switch dataset_type
         params.cov_type = 'diag';
         params.valid_ratio = 0.25;
 end
-valid_trasf = params.valid_ratio; %1/(1 + params.valid_ratio);
+
+% according to the assignment description,
+% params.valid_ratio should be M_train/M_test
+% the function split_data takes as input validSize
+% which is M_test/M
+% to take into account this difference,
+% the following trasformation is applied:
+valid_trasf = 1/(1 + params.valid_ratio);
+
 N = size(data,1);
 [Xtrain, Ytrain, Xtest, Ytest] = split_data(data(1:N-1,:), data(N,:), valid_trasf);
+
+% the format of the data output variable has been chosen to make the plot 
+% working, note that the function signature is not completely correct
 data = data';
 
 end

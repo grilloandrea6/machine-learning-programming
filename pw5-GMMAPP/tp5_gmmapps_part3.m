@@ -1,5 +1,6 @@
 addpath(genpath("./utils"))
 addpath(genpath("./plot_functions"))
+% there was an error in the path
 addpath(genpath("./functions/part3"))
 
 clear; 
