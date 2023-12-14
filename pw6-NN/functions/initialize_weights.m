@@ -13,7 +13,7 @@ function [W, W0] = initialize_weights(LayerSizes, type)
 %       o W0 {Lx1} cell array containing the bias matrices for all the
 %       layers
 
-L = size(LayerSizes, 2) - 1;
+L = length(LayerSizes) - 1;
 W = cell(L, 1);
 W0 = cell(L, 1);
 
