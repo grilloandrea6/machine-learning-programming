@@ -23,9 +23,9 @@ Z = cell(L, 1);
 
 A{1} = X;
 
-for l=1:L
-    Z{l}= W{l} * A{l} + W0{l};
-    A{l + 1} = forward_activation(Z{l} , Sigmas{l});
+for l = 1 : L
+    Z{l} = W{l} * A{l} + W0{l};
+    A{l + 1} = forward_activation(Z{l}, Sigmas{l});
 end
 
 Y = A{L + 1};

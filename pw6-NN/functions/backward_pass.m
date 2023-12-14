@@ -31,7 +31,7 @@ dZ{L} = dE;
 
 for l = L : -1 : 1
     if l ~= L
-        dZ{l} = (W{l+1}' * dZ{l+1}) .* backward_activation(Z{l}, Sigmas{l});
+        dZ{l} = (W{l + 1}' * dZ{l + 1}) .* backward_activation(Z{l}, Sigmas{l});
     end
     dW{l} = dZ{l} * A{l}' / M;
     dW0{l} = mean(dZ{l}, 2);

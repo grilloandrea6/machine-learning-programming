@@ -11,20 +11,19 @@ function [A] = forward_activation(Z, Sigma)
 
 switch Sigma
     case 'sigmoid'
-        A = 1 ./ (1 + exp(-Z));
-        %A = sigmoid(Z);
+        A = 1 ./ (1 + exp(- Z));
+
     case 'tanh'
         A = tanh(Z);
 
     case 'relu'
         A = max(0 * Z, Z);
-        %A = relu(Z);
+
     case 'leakyrelu'
         A = max(.01 * Z, Z);
-        %A = leakyrelu(Z,.01);
+
     case 'softmax'
         delta = max(Z);
-        A = exp(Z - delta) ./ sum(exp(Z-delta));
-
+        A = exp(Z - delta) ./ sum(exp(Z - delta));
 end
 end
