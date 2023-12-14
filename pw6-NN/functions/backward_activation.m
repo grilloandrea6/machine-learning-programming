@@ -13,10 +13,11 @@ function [dZ] = backward_activation(Z, Sigma)
 switch Sigma
     case 'sigmoid'
         dZ = exp(-(Z)) ./ (exp(-(Z)) + 1).^2;
+
     case 'tanh'
         dZ = 1 - (exp(-Z) - exp(Z)).^2 ./ (exp(-Z) + exp(Z)).^2;
+
     case 'relu'
-        %relu = max(0,Z);
         for n = 1:N
             for m = 1:M
                 if Z(n,m) > 0
@@ -26,8 +27,8 @@ switch Sigma
                 end
             end
         end
+
     case 'leakyrelu'
-        %leakyrelu = max(.01*Z,Z);
         for n = 1:N
             for m = 1:M
                 if .01*Z(n,m) > 0
@@ -37,7 +38,4 @@ switch Sigma
                 end
             end
         end
-        
-        
-
 end
