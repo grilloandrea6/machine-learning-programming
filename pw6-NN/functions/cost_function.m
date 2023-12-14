@@ -6,4 +6,25 @@ function [E] = cost_function(Y, Yd, type)
 %       o type (string) type of the cost evaluation function
 %   outputs:
 %       o E (scalar) The error
+[P, M] = size(Y);
+
+E = 0;
+
+switch(type)
+    case 'LogLoss'
+        for m = 1:M
+            E = E + Yd(m) * log(Y(m)) + (1 - Yd(m)) * log(1 - Y(m));
+        end
+        E = - E / M;
+    case 'CrossEntropy'
+        for p = 1:P
+            for m = 1:M
+                E = E + Yd(p,m) * log(Y(p,m));
+            end
+        end
+        E = - E / M;
+
+end
+
+
 end

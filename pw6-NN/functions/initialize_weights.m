@@ -12,4 +12,17 @@ function [W, W0] = initialize_weights(LayerSizes, type)
 %       layers 
 %       o W0 {Lx1} cell array containing the bias matrices for all the
 %       layers
+L = size(LayerSizes,2)-1;
+W=cell(L,1);
+W0=cell(L,1);
+
+for l = 1:L
+    switch type
+        case 'random'
+            W{l} = randn(LayerSizes{l+1},LayerSizes{l});
+            W0{l} = randn(LayerSizes{l+1},1);
+        case 'zeros'
+            W{l} = zeros(LayerSizes{l+1},LayerSizes{l});
+            W0{l} = zeros(LayerSizes{l+1},1);
+    end
 end

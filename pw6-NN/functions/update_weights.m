@@ -17,4 +17,14 @@ function [newW, newW0] = update_weights(W, W0, dW, dW0, eta)
 %       all the layers 
 %       o newW0 {Lx1} cell array containing the new bias matrices for
 %       all the layers
+
+L = size(W,1);
+newW = cell(L,1);
+newW0 = cell(L,1);
+
+for i=1:L
+    newW{i} = W{i} - eta * dW{i};
+    newW0{i} = W0{i} - eta * dW0{i};
+end
+
 end

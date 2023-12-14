@@ -9,4 +9,8 @@ function [dZ] = cost_derivative(Y, Yd, typeCost, typeLayer)
 %       o typeLayer (string) type of the last layer
 %   outputs:
 %       o dZ (PxM) The derivative dE/dZL
+
+%dZ=cost_function(YHat, Y, typeCost)./backward_activation(Yd, typeLayer);
+%dZ=cost_function(Y, Yd, typeCost)./backward_activation(Y, typeLayer);
+dZ = Y - Yd;
 end

@@ -19,4 +19,22 @@ function [dZ, dW, dW0] = backward_pass(dE, W, A, Z, Sigmas)
 %       each layer
 %       o dW0 {Lx1} cell array containing the derivatives of the bias at
 %       each layer
+
+M = size(dE, 2);
+L = size(W, 1);
+
+dZ = cell(L, 1);
+dW = cell(L, 1);
+dW0 = cell(L, 1);
+
+dZ{L} = dE;
+
+for l = L - 1 : -1 : 1
+    dZ{l} = (W{l+1}' * dZ{l+1}) .* backward_activation(Z{l}, Sigmas{l});
+end    
+for l = 1:L
+    dW{l} = dZ{l} * A{l}' / M;
+    dW0{l} = mean(dZ{l}, 2);
+end
+
 end
