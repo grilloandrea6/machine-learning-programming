@@ -13,7 +13,7 @@ E = 0;
 switch(type)
     case 'LogLoss'
         for m = 1:M
-            E = E - (1 - Yd(m)) * log(1 - Y(m)) - Yd(m) * log(Y(m));
+            E = E - (1 - Yd(:,m))' * log(1 - Y(:,m)) - Yd(:,m)' * log(Y(:,m));
         end
         E = E / M;
     case 'CrossEntropy'

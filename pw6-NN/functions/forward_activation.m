@@ -23,7 +23,7 @@ switch Sigma
         A = max(.01 * Z, Z);
 
     case 'softmax'
-        delta = max(Z);
-        A = exp(Z - delta) ./ sum(exp(Z - delta));
+        delta = max(Z, [], 1);
+        A = exp(Z - delta) ./ sum(exp(Z - delta), 1);
 end
 end

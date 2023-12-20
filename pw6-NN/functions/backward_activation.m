@@ -31,10 +31,10 @@ switch Sigma
     case 'leakyrelu'
         for n = 1:N
             for m = 1:M
-                if .01*Z(n,m) > 0
-                    dZ(n,m) = .01;
+                if Z(n,m) > 0
+                    dZ(n,m) = 1;
                 else
-                    dZ(n,m) = 0;
+                    dZ(n,m) = 0.01;
                 end
             end
         end
