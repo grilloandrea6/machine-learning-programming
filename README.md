@@ -1,4 +1,4 @@
 # Machine Learning Programming
-Exercises from the EPFL course Model Predictive Control.
+Assignments and exercises from the EPFL course Machine Learning Programming.
 
 2023, fall semester
